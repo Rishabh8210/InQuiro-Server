@@ -1,50 +1,46 @@
-import {
-    Table,
-    Column,
-    Model,
-    DataType,
-    CreatedAt,
-    UpdatedAt,
-    BeforeCreate,
-    PrimaryKey
-} from 'sequelize-typescript'
+import { DataType, DataTypes, Model } from "sequelize";
+import sequelize from "../config/database-config";
 
-@Table({
-    timestamps: true,
-    tableName: 'Users',
-    modelName: 'User'
-})
-class User extends Model {
-    @Column({
-        primaryKey: true,
-        type: DataType.UUID,
-        defaultValue: DataType.UUIDV4,
-    })
-    id!:string
-    
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    username!: string
-    
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    email!: string 
-    
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    password!: string 
-
-    @CreatedAt
-    created_At!: Date;
-
-    @UpdatedAt
-    updated_at!: Date;
+interface UserAttribute{
+  name:string,
+  username: string,
+  email: string,
+  password: string
 }
 
-export default User 
+
+class User extends Model<UserAttribute> implements UserAttribute {
+  public name!:string;
+  public email!:string;
+  public username!:string;
+  public password!:string;
+}
+
+User.init(
+  {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }, 
+  },
+  {
+    tableName: "Users",
+    sequelize
+  }
+)
+
+export default User;
