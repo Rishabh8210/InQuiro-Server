@@ -8,4 +8,7 @@
 - User should be able to follow another users
 - User should be able to filter out question based on topics
 - User can follow a topic also
-- Every question can belong to multiple topics  
+- Every question can belong to multiple topics
+
+### DB design
+![image](https://github.com/user-attachments/assets/308e8020-1f35-475f-85f9-2a9faa93bca9)
