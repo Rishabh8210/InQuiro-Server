@@ -11,4 +11,5 @@
 - Every question can belong to multiple topics
 
 ### DB design
-![image](https://github.com/user-attachments/assets/308e8020-1f35-475f-85f9-2a9faa93bca9)
+![image](https://github.com/user-attachments/assets/e3aa7f31-bf58-4e28-9c51-3a69b901c32e)
+
