@@ -8,3 +8,5 @@ export const DB_PASS = process.env.DB_PASS
 export const DB_HOST = process.env.DB_HOST
 export const DB_NAME = process.env.DB_NAME
 export const SYNC = process.env.SYNC
+export const SALT = process.env.SALT
+export const SECRET_KEY = process.env.SECRET_KEY
