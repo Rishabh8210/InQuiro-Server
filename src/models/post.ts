@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database-config'
 import User from './user';
+import Hashtag from './hashtag';
 
 export interface PostAttributes{
     id: number,
@@ -14,6 +15,10 @@ class Post extends Model<PostAttributes> implements PostAttributes{
     public post_type!:string;
     public post_content!:string;
     public user_id!:number
+
+    // Add custom Sequelize association methods
+    public addHashtags!: (hashtags: Hashtag[] | Hashtag) => Promise<void>;
+    public getHashtags!: () => Promise<Hashtag[]>;
 }
 Post.init(
     {
