@@ -1,6 +1,6 @@
 import User from '../models/user'
 import { UserAttribute } from '../models/user'
-import { StatusCodes } from 'http-status-codes'
+
 class UserRepository{
     createUser = async(user: UserAttribute) => {
         try {
@@ -32,6 +32,34 @@ class UserRepository{
         } catch (error) {
             console.log("Something went wrong inside repository layer get username method");
             throw error
+        }
+    }
+
+    updateUserData = async(userId:number, userData: Partial<UserAttribute>) => {
+        try {
+            const response = await User.update(userData, {
+                where: {
+                    id: userId
+                }
+            });
+            const getUpdatedData = await User.findByPk(userId);
+            return getUpdatedData;
+        } catch (error) {
+            console.log("Something went wrong inside repository layer update method");
+            throw error;
+        }
+    }
+
+    deleteUserData = async(userId: number) => {
+        try {
+            const response = await User.destroy({
+                where: {
+                    id: userId
+                }
+            })
+        } catch (error) {
+            console.log("Something went wrong inside repository layer delete method");
+            throw error;
         }
     }
 }

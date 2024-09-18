@@ -48,5 +48,90 @@ class UserController{
             })
         }
     }
+
+    getUserById = async(req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.params.userId) as number;
+            const isUser = await this.userController.getUserById(userId)
+            return res.status(StatusCodes.OK).json({
+                data: isUser,
+                message: `Successfully fetched user details with id ${userId}`,
+                success: true,
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside controller layer getUserById method")
+            return res.status(StatusCodes.NOT_FOUND).json({
+                data: {},
+                message: `Not able to fetch user details`,
+                success: false,
+                err: error
+            })
+        }
+    }
+
+    getUserByUsername = async(req: Request, res: Response) => {
+        try {
+            const username = req.query.username as string;
+            const isUser = await this.userController.getUserByUsername(username)
+            return res.status(StatusCodes.OK).json({
+                data: isUser,
+                message: `Successfully fetched user details with username ${username}`,
+                success: true,
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside controller layer getUserByUsername method")
+            return res.status(StatusCodes.NOT_FOUND).json({
+                data: {},
+                message: `Not able to fetch user details`,
+                success: false,
+                err: error
+            })
+        }
+    }
+
+    deleteUserData = async(req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.params.userId) as number;
+            const response = await this.userController.deleteUserData(userId);
+            return res.status(StatusCodes.OK).json({
+                data: response,
+                success: true,
+                message: `Successfully able to delete ${userId} user data`,
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside user controller deleteUserData method");
+            return res.status(StatusCodes.OK).json({
+                data: {},
+                success: false,
+                message: `Not able to delete user data`,
+                err: error
+            })
+        }
+    }
+
+    updateUserData = async(req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.params.userId) as number;
+            const userData:Partial<UserAttribute> = req.body;
+            const response = await this.userController.updateUserData(userId, userData);
+            return res.status(StatusCodes.OK).json({
+                data: response,
+                success: true,
+                message: `Successfully able to update ${userId} user data`,
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController updateUserData method");
+            return res.status(StatusCodes.NOT_FOUND).json({
+                data: {},
+                success: false,
+                message: `Not able to update user data`,
+                err: error
+            })
+        }
+    }
 }
 export default UserController
