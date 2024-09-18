@@ -2,6 +2,8 @@ import { DataType, DataTypes, Model } from "sequelize";
 import sequelize from "../config/database-config";
 import bcrypt from 'bcrypt'
 import {SALT} from '../config/server-config'
+import Post from './post'
+
 export interface UserAttribute{
   id: number,
   name:string,
@@ -24,7 +26,7 @@ class User extends Model<UserAttribute> implements UserAttribute {
 User.init(
   {
     id: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -47,8 +49,7 @@ User.init(
       allowNull: false
     },
     acc_type: {
-      type: DataTypes.ENUM,
-      values: ["Private", "Public"],
+      type: DataTypes.ENUM("Private", "Public"),
       allowNull: false,
       defaultValue: "Public",
     } 
@@ -69,7 +70,7 @@ User.init(
           user.password = await bcrypt.hash(user.password, SALT_VALUE)
         }
       }
-    }
+    },
   }
 )
 

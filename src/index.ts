@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import {PORT, SYNC} from './config/server-config'
 import v1ApiRoutes from './routes/index'
 import sequelize from './config/database-config'
+import './models/associations'
 
 function setupAndStartServer(){
     const app = express();
