@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database-config'
 import User from './user';
 
-interface PostAttributes{
+export interface PostAttributes{
     id: number,
     post_type: string,
     post_content: string,
