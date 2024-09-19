@@ -2,6 +2,7 @@ import User from "./user";
 import Post from "./post";
 import Hashtag from "./hashtag";
 import Like from "./like";
+import Answer from "./answer";
 
 // User -> Post  -- 1: N
 User.hasMany(Post, {
@@ -26,3 +27,21 @@ Post.belongsToMany(Hashtag, {through: 'HashtagsByPost'})
 User.hasMany(Like, { foreignKey: 'user_id' });
 Like.belongsTo(User, { foreignKey: 'user_id' });
 Like.belongsTo(Post, { foreignKey: 'like_type_id' });
+
+// User -> Answer -- 1:N
+User.hasMany(Answer, {
+    foreignKey: 'user_id',
+    as: 'Answers'
+})
+Post.hasMany(Answer, {
+    foreignKey: 'post_id',
+    as: 'Answers'
+})
+Answer.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'User'
+})
+Answer.belongsTo(Post, {
+    foreignKey: 'post_id',
+    as: 'Post'
+})
