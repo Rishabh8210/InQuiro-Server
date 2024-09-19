@@ -133,5 +133,27 @@ class UserController{
             })
         }
     }
+
+    likePost = async(req: Request, res: Response) => {
+        try {
+            const postId = parseInt(req.query.postId as string) as number;
+            const userId:number = req.body.userId;
+            const response = await this.userController.likePost(userId, postId);
+            return res.status(StatusCodes.OK).json({
+                data: response,
+                success: true,
+                message: 'Successfully liked the post',
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController LikePost method");
+            return res.status(StatusCodes.NOT_FOUND).json({
+                data: {},
+                success: false,
+                message: `Not able to Like the post`,
+                err: error
+            })
+        }
+    }
 }
 export default UserController

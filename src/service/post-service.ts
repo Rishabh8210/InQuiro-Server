@@ -1,18 +1,15 @@
 import { HashtagsAttributes } from "../models/hashtag";
 import { PostAttributes } from "../models/post";
 import PostReposiorty from "../repository/post-repository";
-import HashtagService from "./hashtag-service";
-import UserService from "./user-service";
+import HashtagRepository from "../repository/hashtag-repository";
 
 
 class PostService{
     postService: PostReposiorty
-    hashtagService: HashtagService
-    userService: UserService
+    hashtagService: HashtagRepository
     constructor(){
         this.postService = new PostReposiorty()
-        this.hashtagService = new HashtagService()
-        this.userService = new UserService()
+        this.hashtagService = new HashtagRepository()
     }
     createPost = async(postData: PostAttributes) => {
         try {

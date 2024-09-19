@@ -3,6 +3,7 @@ import User, { UserAttribute } from "../models/user";
 import { SECRET_KEY } from '../config/server-config'
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcrypt"
+import PostReposiorty from "../repository/post-repository";
 
 interface jwtPayload {
     id: number, 
@@ -11,8 +12,10 @@ interface jwtPayload {
 
 class UserService {
     userService: UserRepository
+    postService: PostReposiorty
     constructor(){
         this.userService = new UserRepository();
+        this.postService = new PostReposiorty();
     }
 
     #createToken(payload: jwtPayload){
@@ -146,6 +149,25 @@ class UserService {
             return response
         } catch (error) {
             console.log("Something went wrong inside service layer updateUserData method");
+            throw error
+        }
+    }
+
+    likePost = async(userId: number, postId: number) => {
+        try {
+            const isUserExist = await this.getUserById(userId);
+            if(!isUserExist){
+                throw "No user found"
+            }
+            const isPostExist = await this.postService.getPostById(postId);
+            if(!isPostExist){
+                throw "No Post found"
+            }
+
+            const response = await isUserExist.likePost(postId);
+            return response
+        } catch (error) {
+            console.log("Something went wrong inside service layer likePost method");
             throw error
         }
     }

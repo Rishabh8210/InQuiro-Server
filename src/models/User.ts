@@ -3,6 +3,7 @@ import sequelize from "../config/database-config";
 import bcrypt from 'bcrypt'
 import { SALT } from '../config/server-config'
 import Hashtag from "./hashtag";
+import Like from "./like";
 
 export interface UserAttribute {
     id: number,
@@ -21,6 +22,49 @@ class User extends Model<UserAttribute> implements UserAttribute {
     public username!: string;
     public password!: string;
     public acc_type!: string
+
+    // Custom likePost method for manual User->Post association through Like table
+    public async likePost(postId: number) {
+        try {
+            const response = await Like.create({
+                like_type: 'Post',
+                like_type_id: postId,
+                user_id: this.id
+            }) 
+            return response; 
+        } catch (error) {
+            console.log("Something went wrong inside User model likePost method");
+            throw error
+        }
+    }
+
+    // Custom likeComment method for manual User->Post association through Like table
+    public async likeComment(commentId: number) {
+        try {
+            return await Like.create({
+                like_type: 'Comment',
+                like_type_id: commentId,
+                user_id: this.id
+            })
+        } catch (error) {
+            console.log("Something went wrong inside User model likeComment method");
+            throw error
+        }
+    }
+
+    // // Custom likeAnswer method for manual User->Post association through Like table
+    public async likeAnswer(answerId: number) {
+        try {
+            return await Like.create({
+                like_type: 'Answer',
+                like_type_id: answerId,
+                user_id: this.id
+            })
+        } catch (error) {
+            console.log("Something went wrong inside User model likeAnswer method");
+            throw error
+        }
+    }
 
     // Add custom Sequelize association methods
     public addHashtags!: (hashtags: Hashtag[] | Hashtag) => Promise<void>;
