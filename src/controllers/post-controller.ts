@@ -21,7 +21,7 @@ class PostController{
             })
         } catch (error) {
             console.log("Something went wrong inside post controller create post method")
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 success: false,
                 message: 'Not able to create post',
@@ -42,7 +42,7 @@ class PostController{
                 err: {}
             })
         } catch (error) {
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 message: 'Not able to update post data',
                 success: false,
@@ -62,7 +62,7 @@ class PostController{
                 err: {}
             })
         } catch (error) {
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 message: 'Not able to delete post data',
                 success: false,
@@ -82,7 +82,7 @@ class PostController{
                 err: {}
             })
         } catch (error) {
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 message: 'Not able to fetch post details',
                 success: false,
@@ -102,7 +102,7 @@ class PostController{
                 err: {}
             })
         } catch (error) {
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 message: 'Not able to fetched posts',
                 success: false,

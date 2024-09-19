@@ -61,7 +61,7 @@ class UserController{
             })
         } catch (error) {
             console.log("Something went wrong inside controller layer getUserById method")
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 message: `Not able to fetch user details`,
                 success: false,
@@ -82,7 +82,7 @@ class UserController{
             })
         } catch (error) {
             console.log("Something went wrong inside controller layer getUserByUsername method")
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 message: `Not able to fetch user details`,
                 success: false,
@@ -125,7 +125,7 @@ class UserController{
             })
         } catch (error) {
             console.log("Something went wrong inside userController updateUserData method");
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 success: false,
                 message: `Not able to update user data`,
@@ -147,7 +147,7 @@ class UserController{
             })
         } catch (error) {
             console.log("Something went wrong inside userController LikePost method");
-            return res.status(StatusCodes.NOT_FOUND).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 success: false,
                 message: `Not able to Like the post`,

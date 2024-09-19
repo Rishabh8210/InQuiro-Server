@@ -76,7 +76,7 @@ class PostService{
         try {
             const isPostExist = await this.postService.getPostById(postId);
             if(!isPostExist){
-                throw `No post found with this postIf ${postId}`;
+                throw `No post found with this postId ${postId}`;
             }
             const response = await this.postService.deletePost(postId);
             return response;
