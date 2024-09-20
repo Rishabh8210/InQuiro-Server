@@ -9,6 +9,8 @@ const answerController = new AnswerController()
 
 router.post('/', postController.createPost);
 router.post('/like', userController.likePost)
-router.post('/answer', answerController.createAnswer)
+router.post('answer', answerController.createAnswer);
+router.put('answer/:postId', answerController.updateAnswer);
+router.delete('asnwer/:postId', answerController.deleteAnswer)
 
 export default router
