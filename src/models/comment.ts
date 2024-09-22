@@ -8,7 +8,7 @@ export interface CommentAttributes{
     commentOn_type: string,
     commentOn_id: string,
     user_id: number,
-    parentComment_id?: number 
+    parentComment_id?: number | null
 }
 
 class Comment extends Model<CommentAttributes> implements CommentAttributes {
@@ -17,7 +17,7 @@ class Comment extends Model<CommentAttributes> implements CommentAttributes {
     public commentOn_type!: string;
     public commentOn_id!: string;
     public user_id!: number;
-    public parentComment_id?: number;
+    public parentComment_id?: number | null;
 }
 
 Comment.init({
