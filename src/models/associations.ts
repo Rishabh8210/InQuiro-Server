@@ -3,6 +3,7 @@ import Post from "./post";
 import Hashtag from "./hashtag";
 import Like from "./like";
 import Answer from "./answer";
+import Comment from "./comment";
 
 // User -> Post  -- 1: N
 User.hasMany(Post, {
@@ -24,9 +25,15 @@ Hashtag.belongsToMany(Post, {through: 'HashtagsByPost'})
 Post.belongsToMany(Hashtag, {through: 'HashtagsByPost'})
 
 // User -> Post -> Like -- N : M -- We have to do it manually
+
 User.hasMany(Like, { foreignKey: 'user_id' });
 Like.belongsTo(User, { foreignKey: 'user_id' });
-Like.belongsTo(Post, { foreignKey: 'like_type_id' });
+
+Post.hasMany(Like, {foreignKey: 'like_type_id', scope: { like_type: 'Post' }, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+Like.belongsTo(Post, { foreignKey: 'like_type_id'});
+
+Answer.hasMany(Like, { foreignKey: 'like_type_id', scope: { like_type: 'Answer' }, onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Like.belongsTo(Answer, { foreignKey: 'like_type_id'});
 
 // User -> Answer -- 1:N
 User.hasMany(Answer, {
@@ -45,3 +52,22 @@ Answer.belongsTo(Post, {
     foreignKey: 'post_id',
     as: 'Post'
 })
+
+// User -> Post -> Comment -- N : M -- We have to do it manually
+User.hasMany(Comment, { foreignKey: 'user_id', as: 'UserComments' });
+Comment.belongsTo(User, { foreignKey: 'user_id', as: 'User' });
+
+Post.hasMany(Comment, { foreignKey: 'commentOn_id', scope: { commentOn_type: 'Post' }, as: 'PostComments', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Comment.belongsTo(Post, { foreignKey: 'commentOn_id', as: 'Post' });
+
+Answer.hasMany(Comment, { foreignKey: 'commentOn_id', scope: { commentOn_type: 'Answer' }, as: 'AnswerComments', onDelete: 'CASCADE', onUpdate: 'CASCADE'});
+Comment.belongsTo(Answer, { foreignKey: 'commentOn_id', as: 'Answer' });
+
+Comment.hasMany(Comment, { 
+    foreignKey: 'parentComment_id', 
+    as: 'Replies' 
+});
+Comment.belongsTo(Comment, { 
+    foreignKey: 'parentComment_id', 
+    as: 'Parent' 
+});
