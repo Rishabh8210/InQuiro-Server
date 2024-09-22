@@ -6,7 +6,7 @@ export interface CommentAttributes{
     id?: number,
     content: string,
     commentOn_type: string,
-    commentOn_id: string,
+    commentOn_id: number,
     user_id: number,
     parentComment_id?: number | null
 }
@@ -15,7 +15,7 @@ class Comment extends Model<CommentAttributes> implements CommentAttributes {
     public id!: number;
     public content!: string;
     public commentOn_type!: string;
-    public commentOn_id!: string;
+    public commentOn_id!: number;
     public user_id!: number;
     public parentComment_id?: number | null;
 }

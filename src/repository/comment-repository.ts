@@ -35,6 +35,16 @@ class CommentRepository {
         }
     }
 
+    getCommentById = async(commentId: number) => {
+        try {
+            const response = await Comment.findByPk(commentId);
+            return response
+        } catch (error) {
+            console.log("Something went wrong inside Comment repository createComment meethod");
+            throw error;
+        }        
+    }
+
     getAllTopLevelComment = async(postType: "Post" | "Answer", postTypeId: number) => {
         try {
             const response = await Comment.findAll({
@@ -48,6 +58,7 @@ class CommentRepository {
                     as: 'Replies'
                 }]
             })
+            return response
         } catch (error) {
             console.log("Something went wrong inside Comment repository createComment meethod");
             throw error;
