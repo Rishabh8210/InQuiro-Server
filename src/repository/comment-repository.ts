@@ -2,6 +2,8 @@ import Comment from "../models/comment";
 import { CommentAttributes } from "../models/comment";
 import { Op } from "sequelize";
 
+export type CommentPostTypeAttribute = "Post" | "Answer"
+
 class CommentRepository {
     createComment = async(commentData: CommentAttributes) => {
         try {
@@ -45,7 +47,7 @@ class CommentRepository {
         }        
     }
 
-    getAllTopLevelComment = async(postType: "Post" | "Answer", postTypeId: number) => {
+    getAllTopLevelComment = async(postType: CommentPostTypeAttribute, postTypeId: number) => {
         try {
             const response = await Comment.findAll({
                 where: {

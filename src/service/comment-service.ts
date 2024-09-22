@@ -1,4 +1,4 @@
-import CommentRepository from "../repository/comment-repository";
+import CommentRepository, { CommentPostTypeAttribute } from "../repository/comment-repository";
 import PostReposiorty from "../repository/post-repository";
 import AnswerRepository from "../repository/answer-repository";
 import { CommentAttributes } from "../models/comment";
@@ -73,7 +73,7 @@ class CommentService {
         }
     }
 
-    getAllTopLevelComment = async(postType: "Post" | "Answer" , postTypeId: number) => {
+    getAllTopLevelComment = async(postType: CommentPostTypeAttribute , postTypeId: number) => {
         try {
             const response = await this.commentService.getAllTopLevelComment(postType, postTypeId);
             if(!response) {
