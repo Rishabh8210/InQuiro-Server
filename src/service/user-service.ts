@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from "bcrypt"
 import PostReposiorty from "../repository/post-repository";
 import { verifyToken } from "../utils/validateToken";
+import HashtagRepository from "../repository/hashtag-repository";
 
 interface jwtPayload {
     id: number, 
@@ -14,9 +15,11 @@ interface jwtPayload {
 class UserService {
     userService: UserRepository
     postService: PostReposiorty
+    hashtagService: HashtagRepository
     constructor(){
         this.userService = new UserRepository();
         this.postService = new PostReposiorty();
+        this.hashtagService = new HashtagRepository();
     }
 
     #createToken(payload: jwtPayload){
@@ -204,6 +207,77 @@ class UserService {
             return response;
         } catch (error) {
             console.log("Something went wrong inside service layer getFollowersList method");
+            throw error
+        }
+    }
+
+    removeFromFolloweeList = async(followeeId: number, followerId: number) => {
+        try {
+            const isFolloweeExist = await this.userService.getUserById(followeeId);
+            if(!isFolloweeExist){
+                throw `No user found with this ${followeeId} id`
+            }
+            const isFollowerExist = await this.userService.getUserById(followerId);
+            if(!isFollowerExist) {
+                throw `No Hashtag found with this ${followerId} id`
+            }
+
+            await isFolloweeExist.removeFollowee(isFollowerExist);
+            return true;
+        } catch (error) {
+            console.log("Something went wrong inside service layer removeFromFolloweeList method");
+            throw error
+        }
+    }
+
+    followHashtags = async(userId: number, hashtagId: number) => {
+        try {
+            const isUserExist = await this.userService.getUserById(userId);
+            if(!isUserExist){
+                throw `No user found with this ${userId} id`
+            }
+            const isHashtagExist = await this.hashtagService.getHashtagById(hashtagId);
+            if(!isHashtagExist) {
+                throw `No Hashtag found with this ${hashtagId} id`
+            }
+            console.log(isUserExist, isHashtagExist);
+            await isUserExist.addFollowedHashtags(isHashtagExist);
+            return true;
+        } catch (error) {
+            console.log("Something went wrong inside service layer followHashtags method");
+            throw error
+        }
+    }
+
+    getFollowedHashtags = async(userId: number) => {
+        try {
+            const isUserExist = await this.userService.getUserById(userId);
+            if(!isUserExist) {
+                throw `No user found with this ${userId} id`
+            }
+            const response = await isUserExist.getFollowedHashtags();
+            return response;
+        } catch (error) {
+            console.log(error);
+            console.log("Something went wrong inside service layer getFollowedHashtags method");
+            throw error
+        }
+    }
+
+    removeFollowedHashtag = async(userId: number, hashtagId: number) => {
+        try {
+            const isUserExist = await this.userService.getUserById(userId);
+            if(!isUserExist){
+                throw `No user found with this ${userId} id`
+            }
+            const isHashtagExist = await this.hashtagService.getHashtagById(hashtagId);
+            if(!isHashtagExist) {
+                throw `No Hashtag found with this ${hashtagId} id`
+            }
+            await isUserExist.removeFollowedHashtag(isHashtagExist);
+            return true;
+        } catch (error) {
+            console.log("Something went wrong inside service layer removeFollowedHashtag method");
             throw error
         }
     }

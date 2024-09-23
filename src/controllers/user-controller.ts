@@ -230,5 +230,107 @@ class UserController{
             })
         }
     }
+
+    removeFromFolloweeList = async(req: CustomRequest, res: Response) => {
+        try {
+            if(!req.headers['user']) {
+                throw "Signin is required"
+            }
+            const followeeId = req.headers['user'].id;
+            const followerId = parseInt(req.params.followerId) as number;
+            
+            const response = await this.userController.removeFromFolloweeList(followeeId, followerId);
+            return res.status(StatusCodes.OK).json({
+                data: response, 
+                success: true,
+                message: 'User successfully removed follower from following list',
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController removeFromFolloweeList method");
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                data: {},
+                success: false,
+                message: `Not able to remove follower from the following list`,
+                err: error
+            })
+        }
+    }
+    
+    followHashtags = async(req: CustomRequest, res: Response) => {
+        try {
+            if(!req.headers['user']) {
+                throw "Signin is required"
+            }
+            const userId = req.headers['user'].id;
+            const hashtagId = parseInt(req.params.hashtagId) as number;
+            console.log(userId, hashtagId);
+            const response = await this.userController.followHashtags(userId, hashtagId);
+            return res.status(StatusCodes.OK).json({
+                data: response, 
+                success: true,
+                message: 'User successfully followed the hashtag',
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController followHashtags method");
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                data: {},
+                success: false,
+                message: `Not able to follow the hashtag`,
+                err: error
+            })
+        }
+    }
+
+    getFollowedHashtags = async(req: CustomRequest, res: Response) => {
+        try {
+            if(!req.headers['user']) {
+                throw "Signin is required"
+            }
+            const userId = req.headers['user'].id;
+            const response = await this.userController.getFollowedHashtags(userId);
+            return res.status(StatusCodes.OK).json({
+                data: response, 
+                success: true,
+                message: 'successfully fetched user follwed tags list',
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController getFollowedHashtags method");
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                data: {},
+                success: false,
+                message: `Not able to fetch user follwed tags list`,
+                err: error
+            })
+        }
+    }
+
+    removeFollowedHashtag = async(req: CustomRequest, res: Response) => {
+        try {
+            if(!req.headers['user']) {
+                throw "Signin is required"
+            }
+            const userId = req.headers['user'].id;
+            const hashtagId = parseInt(req.params.hashtagId) as number;
+            
+            const response = await this.userController.removeFollowedHashtag(userId, hashtagId);
+            return res.status(StatusCodes.OK).json({
+                data: response, 
+                success: true,
+                message: 'User successfully removed hashtag from the followed list',
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController removeFollowedHashtag method");
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                data: {},
+                success: false,
+                message: `Not able to remove the followed hashtags from the list`,
+                err: error
+            })
+        }
+    }
 }
 export default UserController

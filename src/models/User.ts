@@ -66,9 +66,10 @@ class User extends Model<UserAttribute> implements UserAttribute {
         }
     }
 
-    // Add custom Sequelize association methods for hashtags
-    public addHashtags!: (hashtags: Hashtag[] | Hashtag) => Promise<void>;
-    public getHashtags!: () => Promise<Hashtag[]>;
+    // Add custom Sequelize association methods for Follow Hashtags
+    public addFollowedHashtags!: (hashtags: Hashtag[] | Hashtag) => Promise<void>;
+    public getFollowedHashtags!: () => Promise<Hashtag[]>;
+    public removeFollowedHashtag!: (hashtags: Hashtag) => Promise<void>;
 
     // Add custom Sequelize association methods for followers-followees
     public addFollowees!: (userData: User[] | User) => Promise<void>;

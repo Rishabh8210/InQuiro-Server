@@ -84,3 +84,14 @@ User.belongsToMany(User, {
     foreignKey: 'followee_id',
     as: 'Followers'
 })
+
+User.belongsToMany(Hashtag, {
+    through: 'UserHashtags',
+    foreignKey: 'user_id',
+    as: 'FollowedHashtags'
+})
+Hashtag.belongsToMany(User, {
+    through: 'UserHashtags',
+    foreignKey: 'hashtag_id',
+    as: 'Followers'
+})
