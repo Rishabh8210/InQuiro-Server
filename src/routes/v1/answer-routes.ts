@@ -3,6 +3,7 @@ const router = Router();
 import AnswerController from "../../controllers/answer-controller";
 const answerController = new AnswerController()
 
-router.get('/post/:postId', answerController.getAllPostAnswer);
-router.get('/:userId', answerController.getAllPostAnswer);
+router.post('/', answerController.createAnswer);
+router.put('/:postId', answerController.updateAnswer);
+router.delete('/:postId', answerController.deleteAnswer)
 export default router;
