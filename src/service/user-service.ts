@@ -4,6 +4,7 @@ import { SECRET_KEY } from '../config/server-config'
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcrypt"
 import PostReposiorty from "../repository/post-repository";
+import { verifyToken } from "../utils/validateToken";
 
 interface jwtPayload {
     id: number, 
@@ -41,18 +42,6 @@ class UserService {
         }
     }
 
-    #verifyToken(token: string){
-        try {
-            if(!SECRET_KEY){
-                throw "JWT Secret key not found, please check it carefully"
-            }
-            const isVerified = jwt.verify(token, SECRET_KEY);
-            return isVerified;
-        } catch (error) {
-            console.log('Something went wrong inside verifyToken method inside service layer')
-            throw error
-        }
-    }
     createUser = async(userData: UserAttribute) => {
         try {
             const response = await this.userService.createUser(userData);
@@ -84,7 +73,7 @@ class UserService {
 
     isAuthenticated = async(token:string) => {
         try {
-            const isVerified = this.#verifyToken(token) as jwtPayload;
+            const isVerified = verifyToken(token) as jwtPayload;
             if(!isVerified){
                 throw "Token is expired or Invalid token"
             }
@@ -168,6 +157,53 @@ class UserService {
             return response
         } catch (error) {
             console.log("Something went wrong inside service layer likePost method");
+            throw error
+        }
+    }
+
+    addInFollowingList = async(followeeId:number, followerId: number) => {
+        try {
+            const isFolloweeExist = await this.userService.getUserById(followeeId);
+            if(!isFolloweeExist) {
+                throw `No user found with this ${followeeId} id`
+            }
+            const isFollowerExist = await this.userService.getUserById(followerId);
+            if(!isFollowerExist) {
+                throw `No user found with this ${followerId} id`
+            }
+
+            await isFolloweeExist.addFollowees(isFollowerExist)
+            return true;
+        } catch (error) {
+            console.log("Something went wrong inside service layer adInFollowingList method");
+            throw error
+        }
+    }
+    
+    getFollowingList = async(followeeId: number) => {
+        try {
+            const isFolloweeExist = await this.userService.getUserById(followeeId);
+            if(!isFolloweeExist) {
+                throw `No user found with this ${followeeId} id`
+            }
+            const response = await isFolloweeExist.getFollowees()
+            return response;
+        } catch (error) {
+            console.log("Something went wrong inside service layer getFollowingList method");
+            throw error
+        }
+    }
+
+    getFollowersList = async(followeeId: number) => {
+        try {
+            const isFolloweeExist = await this.userService.getUserById(followeeId);
+            if(!isFolloweeExist) {
+                throw `No user found with this ${followeeId} id`
+            }
+            const response = await isFolloweeExist.getFollowers()
+            return response;
+        } catch (error) {
+            console.log("Something went wrong inside service layer getFollowersList method");
             throw error
         }
     }

@@ -71,3 +71,16 @@ Comment.belongsTo(Comment, {
     foreignKey: 'parentComment_id', 
     as: 'Parent' 
 });
+
+// For Follow each other 
+User.belongsToMany(User, {
+    through: 'UserFollowers', 
+    foreignKey: 'followers_id',
+    as: 'Followees'
+})
+
+User.belongsToMany(User, {
+    through: 'UserFollowers',
+    foreignKey: 'followee_id',
+    as: 'Followers'
+})

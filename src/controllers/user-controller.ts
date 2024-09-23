@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import UserService from "../service/user-service";
 import { UserAttribute } from "../models/user";
+import { CustomRequest } from '../middleware/auth-validator'
 
 class UserController{
     userController: UserService
@@ -151,6 +152,80 @@ class UserController{
                 data: {},
                 success: false,
                 message: `Not able to Like the post`,
+                err: error
+            })
+        }
+    }
+
+    addInFollowingList = async(req: CustomRequest, res: Response) => {
+        try {
+            if(!req.headers['user']) {
+                throw "Signin is required"
+            }
+            const followeeId = req.headers['user'].id;
+            const followerId = parseInt(req.params.followerId) as number;
+            console.log(followeeId, followerId);
+            const response = await this.userController.addInFollowingList(followeeId, followerId);
+            return res.status(StatusCodes.OK).json({
+                data: response, 
+                success: true,
+                message: 'User successfully added in your following list',
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController addInFollowingList method");
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                data: {},
+                success: false,
+                message: `Not able to add user in the following list`,
+                err: error
+            })
+        }
+    }
+
+    getFollowingList = async(req: CustomRequest, res: Response) => {
+        try {
+            if(!req.headers['user']) {
+                throw "Signin is required"
+            }
+            const followeeId = req.headers['user'].id;
+            const response = await this.userController.getFollowingList(followeeId);
+            return res.status(StatusCodes.OK).json({
+                data: response, 
+                success: true,
+                message: 'successfully fetched user following list',
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController getFollowingList method");
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                data: {},
+                success: false,
+                message: `Not able to fetch user following list`,
+                err: error
+            })
+        }
+    }
+
+    getFollowersList = async(req: CustomRequest, res: Response) => {
+        try {
+            if(!req.headers['user']) {
+                throw "Signin is required"
+            }
+            const followeeId = req.headers['user'].id;
+            const response = await this.userController.getFollowersList(followeeId);
+            return res.status(StatusCodes.OK).json({
+                data: response, 
+                success: true,
+                message: 'successfully fetched user followers list',
+                err: {}
+            })
+        } catch (error) {
+            console.log("Something went wrong inside userController getFollowersList method");
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                data: {},
+                success: false,
+                message: `Not able to fetch user followers list`,
                 err: error
             })
         }
