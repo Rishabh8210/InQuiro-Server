@@ -1,15 +1,9 @@
-### Requirements
+# Welcome to Quora Backend
+Quora Backend is a Node.js and Express application powering key features of a Quora-like platform. It handles user authentication, Q&A posting, upvoting, and notifications. Built with clean architecture principles and MongoDB, it ensures scalability, maintainability, and efficient data management.
 
-- User should be able to post a question
-- User should be able to answer a question
-- User should be able to comment on an answer
-- User should be able to comment on a comment
-- User should be able to like a comment or a question or an answer
-- User should be able to follow another users
-- User should be able to filter out question based on topics
-- User can follow a topic also
-- Every question can belong to multiple topics
-
-### DB design
-![image](https://github.com/user-attachments/assets/e3aa7f31-bf58-4e28-9c51-3a69b901c32e)
-
+## Project setup
+  - Clone the project `git clone https://github.com/Rishabh8210/Quora-Backend.git`
+  - Execute `npm install`
+  - Create a `.env` file in the root directory and add the following environment variables by looking at config/server-config.ts.
+### DB Design
+![image](https://github.com/user-attachments/assets/3041095c-ebaf-46e4-ae93-6d2327431e7d)
