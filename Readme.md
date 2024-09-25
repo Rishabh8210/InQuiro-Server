@@ -4,6 +4,6 @@ Quora Backend is a Node.js and Express application powering key features of a Qu
 ## Project setup
   - Clone the project `git clone https://github.com/Rishabh8210/Quora-Backend.git`
   - Execute `npm install`
-  - Create a `.env` file in the root directory and add the following environment variables by looking at config/server-config.ts.
+  - Create a `.env` file in the root directory and add the following environment variables by looking at `config/server-config.ts`.
 ### DB Design
 ![image](https://github.com/user-attachments/assets/3041095c-ebaf-46e4-ae93-6d2327431e7d)
