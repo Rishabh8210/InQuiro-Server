@@ -4,9 +4,10 @@ import {PORT, SYNC} from './config/server-config'
 import v1ApiRoutes from './routes/index'
 import sequelize from './config/database-config'
 import './models/associations'
-
+import cors from 'cors'
 function setupAndStartServer(){
     const app = express();
+    app.use(cors())
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({extended: true}))
     app.use('/api', v1ApiRoutes);
