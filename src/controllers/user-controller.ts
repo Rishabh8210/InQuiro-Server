@@ -32,7 +32,7 @@ class UserController{
     siginUser = async(req: Request, res: Response) => {
         try {
             const userData = req.body;
-            const response = await this.userController.siginUser(userData.username, userData.password);
+            const response = await this.userController.siginUser(userData.email, userData.password);
             return res.status(StatusCodes.OK).json({
                 data: response,
                 message: 'Successfully signed-in', 

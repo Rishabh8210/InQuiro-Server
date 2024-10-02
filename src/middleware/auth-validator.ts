@@ -16,12 +16,12 @@ export interface CustomRequest extends Request{
 
 
 export const signinValidator = (req:Request, res: Response, next:NextFunction) => {
-    if(!req.body.username){
+    if(!req.body.email){
         return res.status(StatusCodes.NOT_FOUND).json({
             data: {},
-            message: "Username can't be empty",
+            message: "email can't be empty",
             success: false,
-            err: 'Username is missing in the signin request'
+            err: 'email is missing in the signin request'
 
         })
     }
@@ -33,12 +33,12 @@ export const signinValidator = (req:Request, res: Response, next:NextFunction) =
             err: 'Password is missing in the signin request'
         })
     }
-    else if(!req.body.username && !req.body.password){
+    else if(!req.body.email && !req.body.password){
         return res.status(StatusCodes.NOT_FOUND).json({
             data: {},
-            message: "Username and Password can't be empty",
+            message: "email and Password can't be empty",
             success: false,
-            err: 'Username and password is missing in the signin request'
+            err: 'email and password is missing in the signin request'
         })
     }
     next()

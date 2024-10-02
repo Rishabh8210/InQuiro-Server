@@ -35,6 +35,20 @@ class UserRepository{
         }
     }
 
+    getUserByEmail = async(email: string) => {
+        try {
+            const response = await User.findOne({
+                where: {
+                    email: email
+                }
+            });
+            return response;
+        } catch (error) {
+            console.log("Something went wrong inside repository layer get username method");
+            throw error
+        }
+    }
+
     updateUserData = async(userId:number, userData: Partial<UserAttribute>) => {
         try {
             const response = await User.update(userData, {

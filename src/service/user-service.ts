@@ -55,9 +55,9 @@ class UserService {
         }
     }
 
-    siginUser = async(username: string, password: string) => {
+    siginUser = async(email: string, password: string) => {
         try {
-            const isUserExist = await this.userService.getUserByUsername(username);
+            const isUserExist = await this.userService.getUserByEmail(email);
             if(!isUserExist){
                 throw "User not found, Please try again later!";
             }
@@ -66,7 +66,7 @@ class UserService {
                 throw "Wrong password, Please try again"
             }
             
-            const token = this.#createToken({id: isUserExist.id, username});
+            const token = this.#createToken({id: isUserExist.id, username: isUserExist.username});
             return token;
         } catch (error) {
             console.log("Something went wrong inside service layer siginUser method");
